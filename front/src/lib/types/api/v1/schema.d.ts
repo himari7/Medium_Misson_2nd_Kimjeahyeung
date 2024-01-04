@@ -163,8 +163,8 @@ export interface components {
       statusCode: number;
       msg: string;
       data: components["schemas"]["GetItemResponseBody"];
-      fail: boolean;
       success: boolean;
+      fail: boolean;
     };
     GetMineResponseBody: {
       items: components["schemas"]["PostListItemDto"][];
