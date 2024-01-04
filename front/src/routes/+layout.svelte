@@ -1,52 +1,53 @@
-<script lang="ts">
-  import rq from '$lib/rq/rq.svelte';
-  import '$lib/app.css';
-  import { untrack } from 'svelte';
-
-  const { children } = $props();
-
-  rq.effect(async () => {
-    untrack(() => {
-      rq.initAuth();
-    });
-  });
+<script>
+	import Header from './Header.svelte';
+	import './styles.css';
 </script>
 
-<header class="flex">
-  <ul class="flex gap-2">
-    <li>
-      <a href="/" class="btn btn-link">홈</a>
-    </li>
-    <li>
-      <a href="/post/list" class="btn btn-link">글</a>
-    </li>
-    {#if rq.isLogout()}
-      <li>
-        <a href="/member/login" class="btn btn-link">로그인</a>
-      </li>
-    {/if}
-    {#if rq.isLogin()}
-      <li>
-        <button on:click={() => rq.goToTempPostEditPage()} class="btn btn-link">글 작성</button>
-      </li>
-      <li>
-        <a href="/post/myList" class="btn btn-link">내글</a>
-      </li>
-      <li>
-        <button on:click={() => rq.logout()} class="btn btn-link">로그아웃</button>
-      </li>
-    {/if}
-  </ul>
+<div class="app">
+	<Header />
 
-  <div class="flex-1"></div>
+	<main>
+		<slot />
+	</main>
 
-  <div>
-    <a href="/member/me" class="btn btn-link">
-      {rq.member.username}
-    </a>
-  </div>
-</header>
+	<footer>
+		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
+	</footer>
+</div>
 
-<main>
-  {@render children()}
-</main>
+<style>
+	.app {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+	}
+
+	main {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		padding: 1rem;
+		width: 100%;
+		max-width: 64rem;
+		margin: 0 auto;
+		box-sizing: border-box;
+	}
+
+	footer {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 12px;
+	}
+
+	footer a {
+		font-weight: bold;
+	}
+
+	@media (min-width: 480px) {
+		footer {
+			padding: 12px 0;
+		}
+	}
+</style>
